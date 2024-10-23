@@ -12,20 +12,26 @@ services:
 #      - db
   db:
     image: mariadb:10.6.4-focal
+    container_name: rentCarDB
+    env_file:
+      - .env
     environment:
-      - MYSQL_DATABASE=rent_car
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
     restart: always
-    secrets:
-      - db-password
     volumes:
       - db-data:/var/lib/mysql
     networks:
       - spring-mysql
-volumes:
-  db-data: {}
-secrets:
-  db-password:
-    file: db/password.txt
+
 networks:
-  spring-mysql: {}
+  spring-mysql:
+
+volumes:
+  db-data:
