@@ -14,7 +14,7 @@ COPY src /app/src
 RUN chmod +x gradlew
 
 # Build the application
-RUN ./gradlew build -x test --no-daemon
+RUN ./gradlew build -x --no-daemon
 
 # Stage 2: Run the application
 FROM amazoncorretto:21
